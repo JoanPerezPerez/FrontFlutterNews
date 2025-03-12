@@ -35,22 +35,24 @@ class MyHomePage extends StatelessWidget {
     var appState = context.watch<MyAppState>();
 
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:[
-          Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('News:'),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(appState.current.asPascalCase),
-              ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:[
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('News 2:'),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(appState.current.asPascalCase),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ]
         ),
-        ]
       ),
     );
   }

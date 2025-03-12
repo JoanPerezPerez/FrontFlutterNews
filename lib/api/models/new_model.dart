@@ -15,8 +15,8 @@ class New {
     id = json['_id']?.toString();
     name = json['name']?.toString();
     description = json['description']?.toString();
-    //dateStart = json['dateStart']?.toString();
-    //dateEnd = json['dateEnd']?.toString();
+    dateStart =  json['dateStart'] != null ? DateTime.tryParse(json['dateStart']) : null;
+    dateEnd =  json['dateEnd'] != null ? DateTime.tryParse(json['dateEnd']) : null;
     image = json['image']?.toString();
     enabled = json['enabled'];
   }

@@ -26,8 +26,8 @@ class New {
     data['_id'] = id;
     data['name'] = name;
     data['description'] = description;
-    data['dateStart'] = dateStart;
-    data['dateEnd'] = dateEnd;
+    data['dateStart'] = dateStart?.toIso8601String();
+    data['dateEnd'] = dateEnd?.toIso8601String();
     data['image'] = image;
     data['enabled'] = enabled;
 

@@ -12,7 +12,7 @@ class ApiService {
       final data = jsonDecode(response.body);
       if (data['result'] != null) {
         final List<dynamic> newsList = data['result'];
-        return newsList.map((json) => New.fromJson(json)).toList();
+        return newsList.map((json) => New.fromJson(json)).take(4).toList();  //limitem a sol agafar les 4 primeres noticies
       } else {
         return [];
       }

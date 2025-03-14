@@ -58,8 +58,9 @@ class MyHomePage extends StatelessWidget {
           children: [
             Text('Noticies noves'),
             Container(
+              width: double.infinity,  // fem que el container ocupi tot l'ample de la pantalla
               color: Colors.purple[100],
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(vertical:16.0), //posem padding a la part superior i inferior del container
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -76,9 +77,11 @@ class MyHomePage extends StatelessWidget {
                               Text(
                                 news.name ?? 'No title',
                                 style: TextStyle(
-                                  fontSize: 10,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                 ),
+                                maxLines: 3, // limita el nombre de linies a 3
+                                overflow: TextOverflow.ellipsis, // si es superen les 3 linies, es mostra punts suspensius
                               ),
                               Spacer(), // situa el botó de llegir més a la part inferior de la card
                               Padding(

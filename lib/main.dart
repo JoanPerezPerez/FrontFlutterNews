@@ -55,56 +55,62 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children:[
+          children: [
             Text('Noticies noves'),
             Container(
               color: Colors.purple[100],
               padding: const EdgeInsets.all(16.0),
-              child:Row(
-                children: appState.news.map((news) {
-                  return SizedBox(
-                    width: 150,
-                    height: 150,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              news.name ?? 'No title',
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                onPressed: () =>{
-                                  Navigator.push( // saltem de pantalla
-                                  context,
-                                  MaterialPageRoute(builder: (context) => NewsPage(news : news)) //passsem context a la nova pantalla 
-                                  )
-                                }, 
-                                child: Text(
-                                  'Llegir més',
-                                  style: TextStyle(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: appState.news.map((news) {
+                    return SizedBox(
+                      width: 150,
+                      height: 150,
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                news.name ?? 'No title',
+                                style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.bold,
                                 ),
-                                
                               ),
-                            ),
-                        ),],
+                              Spacer(), // situa el botó de llegir més a la part inferior de la card
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => NewsPage(news: news),
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    'Llegir més',
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }).toList(),
+                    );
+                  }).toList(),
+                ),
               ),
             ),
-          ]
+          ],
         ),
       ),
     );
@@ -145,6 +151,13 @@ class NewsPage extends StatelessWidget {
                     news.description ?? 'No description for this new', 
                     style: TextStyle(fontSize: 16),
                     softWrap: true, // trenca la linia si es necesari
+                  ),
+                  SizedBox(height: 8),
+                  SizedBox(
+                    child: Image.network(   //s'utilitza per a carregar imatges des de internet
+                      news.image ?? '',
+                      fit: BoxFit.cover,   // ajusta la imatge a la mida del sizedBox
+                    ),
                   ),
                   SizedBox(height: 8),
                   Card(

@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'api/models/new_model.dart';
 import 'api/services/new_service.dart';
-//import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(MyApp());
@@ -156,11 +158,15 @@ class NewsPage extends StatelessWidget {
                     softWrap: true, // trenca la linia si es necesari
                   ),
                   SizedBox(height: 8),
-                  SizedBox(
-                    child: Image.network(   //s'utilitza per a carregar imatges des de internet
-                      news.image ?? '',
-                      fit: BoxFit.cover,   // ajusta la imatge a la mida del sizedBox
-                    ),
+                  Column(
+                    children: [
+                      if (news.image != null)
+                        Image.network(   //s'utilitza per a carregar imatges des de internet
+                          news.image!, // si no hi ha imatge, es mostra la sized box d'abaix
+                          fit: BoxFit.cover,   // ajusta la imatge a la mida del sizedBox
+                        ),
+                      SizedBox(height: 8),  // aquesta sized box es mostra sempre 
+                    ],
                   ),
                   SizedBox(height: 8),
                   Card(
@@ -181,7 +187,9 @@ class NewsPage extends StatelessWidget {
                           ),
                           ElevatedButton(
                             
-                            onPressed: () =>{},// _launchURL(news.url),
+                            onPressed: (){
+                              _launchURL(news.url);
+                              },// _launchURL(news.url),
  
                             child: Text("Obrir noticia al navegador"),
                           ),
@@ -199,12 +207,17 @@ class NewsPage extends StatelessWidget {
   }
 }
 
-_launchURL(String? url) async {
+Future<void> _launchURL(String? url) async {
   if (url == null || url.isEmpty) {
     throw Exception('URL is null or empty');
   }
   final Uri uri = Uri.parse(url);
-  //if (!await launchUrl(uri)) {
+
+ // if (Platform.isWindows) {
+   // Process.run('explorer.exe', [uri.toString()]); // Abre el navegador en Windows
+   //} else {
+    if (!await launchUrl(uri)){
       throw Exception('Could not launch $uri');
- // }
+    }
+  //}
 }
